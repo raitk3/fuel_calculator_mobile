@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fuelcalculator/screens/calculators/Commons.dart';
-import 'package:fuelcalculator/screens/calculators/LitreToKmCalculator.dart';
 import 'package:fuelcalculator/screens/calculators/Per100Getter.dart';
 
 import '../TextWriter.dart';
 
-class Settings extends StatefulWidget{
+class Settings extends StatefulWidget {
   Commons _commons;
+
   Settings(this._commons);
 
   @override
@@ -15,8 +15,7 @@ class Settings extends StatefulWidget{
 }
 
 class _SettingsState extends State<Settings> {
-
-  Color _theme = Colors.purple;
+  Color _theme = Colors.black26;
   Commons _commons;
   TextEditingController _controller = new TextEditingController();
   TextEditingController _controller2 = new TextEditingController();
@@ -25,8 +24,8 @@ class _SettingsState extends State<Settings> {
 
   _SettingsState(this._commons);
 
-  TextFormField getTextField(String hintText, String labelText,
-      IconData givenIcon) {
+  TextFormField getTextField(
+      String hintText, String labelText, IconData givenIcon) {
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
@@ -35,19 +34,20 @@ class _SettingsState extends State<Settings> {
         labelText: labelText,
       ),
       controller: this._controller,
-      onSaved: (String value) {},
       onFieldSubmitted: (value) {
         this._setFuelPrice();
       },
       validator: (String value) {
         return (num.tryParse(value).toDouble() != null &&
-            num.parse(value).toDouble() >= 0) ? 'Wrong input' : null;
+                num.parse(value).toDouble() >= 0)
+            ? 'Wrong input'
+            : null;
       },
     );
   }
 
-  TextFormField getTextField2(String hintText, String labelText,
-      IconData givenIcon) {
+  TextFormField getTextField2(
+      String hintText, String labelText, IconData givenIcon) {
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
@@ -62,13 +62,15 @@ class _SettingsState extends State<Settings> {
       },
       validator: (String value) {
         return (num.tryParse(value).toDouble() != null &&
-            num.parse(value).toDouble() >= 0) ? 'Wrong input' : null;
+                num.parse(value).toDouble() >= 0)
+            ? 'Wrong input'
+            : null;
       },
     );
   }
 
-  TextFormField getTextField3(String hintText, String labelText,
-      IconData givenIcon) {
+  TextFormField getTextField3(
+      String hintText, String labelText, IconData givenIcon) {
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
@@ -77,19 +79,20 @@ class _SettingsState extends State<Settings> {
         labelText: labelText,
       ),
       controller: this._controller3,
-      onSaved: (String value) {},
       onFieldSubmitted: (value) {
         this._setCity();
       },
       validator: (String value) {
         return (num.tryParse(value).toDouble() != null &&
-            num.parse(value).toDouble() >= 0) ? 'Wrong input' : null;
+                num.parse(value).toDouble() >= 0)
+            ? 'Wrong input'
+            : null;
       },
     );
   }
 
-  TextFormField getTextField4(String hintText, String labelText,
-      IconData givenIcon) {
+  TextFormField getTextField4(
+      String hintText, String labelText, IconData givenIcon) {
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
@@ -98,51 +101,55 @@ class _SettingsState extends State<Settings> {
         labelText: labelText,
       ),
       controller: this._controller4,
-      onSaved: (String value) {},
       onFieldSubmitted: (value) {
         this._setAvg();
       },
       validator: (String value) {
         return (num.tryParse(value).toDouble() != null &&
-            num.parse(value).toDouble() >= 0) ? 'Wrong input' : null;
+                num.parse(value).toDouble() >= 0)
+            ? 'Wrong input'
+            : null;
       },
     );
   }
 
-
   Widget build(BuildContext context) {
-    String currentFuelPrice = this._commons.getFuelData()
-        .getFuelPrice()
-        .toString();
-    String currentRoadConsumption = this._commons.getFuelData()
-        .getListPer100()[0].toString();
-    String currentCityConsumption = this._commons.getFuelData()
-        .getListPer100()[1].toString();
-    String currentAverageConsumption = this._commons.getFuelData()
-        .getListPer100()[2].toString();
-    TextFormField textField = this.getTextField(currentFuelPrice,
+    String currentFuelPrice =
+        this._commons.getFuelData().getFuelPrice().toString();
+    String currentRoadConsumption =
+        this._commons.getFuelData().getListPer100()[0].toString();
+    String currentCityConsumption =
+        this._commons.getFuelData().getListPer100()[1].toString();
+    String currentAverageConsumption =
+        this._commons.getFuelData().getListPer100()[2].toString();
+    TextFormField textField = this.getTextField(
+        currentFuelPrice,
         "Uus kütuse hind. Praegu: " + currentFuelPrice + "€/l",
         Icons.euro_symbol);
-    TextFormField textField2 = this.getTextField2(currentRoadConsumption,
+    TextFormField textField2 = this.getTextField2(
+        currentRoadConsumption,
         "Uus maantee kütusekulu. Praegu: " + currentRoadConsumption + "l/100",
         Icons.nature);
-    TextFormField textField3 = this.getTextField3(currentCityConsumption,
+    TextFormField textField3 = this.getTextField3(
+        currentCityConsumption,
         "Uus linna kütusekulu. Praegu: " + currentCityConsumption + "l/100",
         Icons.location_city);
-    TextFormField textField4 = this.getTextField4(currentAverageConsumption,
-        "Uus keskmine kütusekulu. Praegu: " + currentAverageConsumption +
-            "l/100", Icons.nature_people);
+    TextFormField textField4 = this.getTextField4(
+        currentAverageConsumption,
+        "Uus keskmine kütusekulu. Praegu: " +
+            currentAverageConsumption +
+            "l/100",
+        Icons.nature_people);
 
     Per100Getter per100getter = Per100Getter(this._commons);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings"),
+        title: Text("Sätted", style: TextStyle(color: Colors.black),),
+        iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: this._theme,
-
       ),
-      body:
-      Column(
+      body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -155,42 +162,38 @@ class _SettingsState extends State<Settings> {
   }
 
   void _setFuelPrice() {
-    setState(() {
-
-    }
-    );
-    this._commons.getFuelData().setFuelPrice(
-        num.parse(this._controller.text).toDouble());
+    setState(() {});
+    this
+        ._commons
+        .getFuelData()
+        .setFuelPrice(num.parse(this._controller.text).toDouble());
     this._controller.text = "";
   }
 
   void _setRoad() {
-    setState(() {
-
-    }
-    );
-    this._commons.getFuelData().setRoadConsumption(
-        num.parse(this._controller2.text).toDouble());
+    setState(() {});
+    this
+        ._commons
+        .getFuelData()
+        .setRoadConsumption(num.parse(this._controller2.text).toDouble());
     this._controller2.text = "";
   }
 
   void _setCity() {
-    setState(() {
-
-    }
-    );
-    this._commons.getFuelData().setCityConsumption(
-        num.parse(this._controller3.text).toDouble());
+    setState(() {});
+    this
+        ._commons
+        .getFuelData()
+        .setCityConsumption(num.parse(this._controller3.text).toDouble());
     this._controller3.text = "";
   }
 
   void _setAvg() {
-    setState(() {
-
-    }
-    );
-    this._commons.getFuelData().setAvgConsumption(
-        num.parse(this._controller4.text).toDouble());
+    setState(() {});
+    this
+        ._commons
+        .getFuelData()
+        .setAvgConsumption(num.parse(this._controller4.text).toDouble());
     this._controller4.text = "";
   }
 }

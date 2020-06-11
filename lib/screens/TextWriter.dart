@@ -19,7 +19,7 @@ class TextWriter extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(5.0),
         child: Text(
-        this._text, textScaleFactor: 2.5,
+        this._text, textScaleFactor: 2,
         ),
       ),
     );
