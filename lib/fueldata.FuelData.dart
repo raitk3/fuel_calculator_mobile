@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fuelcalculator/screens/TextWriter.dart';
+import 'package:fuelcalculator/screens/calculators/Commons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FuelData {
@@ -73,7 +74,5 @@ class FuelData {
       prefs.setDouble('avg', value);
     }
   }
-  TextWriter display() {
-    return TextWriter("Kütusehind on hetkel " + this._price.toString() + "€/l", Colors.lightGreenAccent, 50);
-  }
+
 }

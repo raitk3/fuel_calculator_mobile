@@ -32,6 +32,7 @@ class _SettingsState extends State<Settings> {
         icon: Icon(givenIcon),
         hintText: hintText,
         labelText: labelText,
+        border: InputBorder.none,
       ),
       controller: this._controller,
       onFieldSubmitted: (value) {
@@ -54,6 +55,7 @@ class _SettingsState extends State<Settings> {
         icon: Icon(givenIcon),
         hintText: hintText,
         labelText: labelText,
+        border: InputBorder.none,
       ),
       controller: this._controller2,
       onSaved: (String value) {},
@@ -77,6 +79,7 @@ class _SettingsState extends State<Settings> {
         icon: Icon(givenIcon),
         hintText: hintText,
         labelText: labelText,
+        border: InputBorder.none,
       ),
       controller: this._controller3,
       onFieldSubmitted: (value) {
@@ -99,6 +102,7 @@ class _SettingsState extends State<Settings> {
         icon: Icon(givenIcon),
         hintText: hintText,
         labelText: labelText,
+        border: InputBorder.none,
       ),
       controller: this._controller4,
       onFieldSubmitted: (value) {
@@ -145,18 +149,20 @@ class _SettingsState extends State<Settings> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sätted", style: TextStyle(color: Colors.black),),
-        iconTheme: IconThemeData(color: Colors.black),
+        centerTitle: true,
+        title: Text("Sätted"),
         backgroundColor: this._theme,
       ),
       body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            textField,
-            textField2,
-            textField3,
-            textField4,
+          children: [this._commons.cardify(Column(
+            children:[
+              textField,
+              textField2,
+              textField3,
+              textField4,]
+          )),
           ]),
     );
   }

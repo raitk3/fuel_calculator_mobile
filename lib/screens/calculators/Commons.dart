@@ -28,8 +28,8 @@ class Commons {
     return this._calculator;
   }
 
-  TextWriter showLitresToEuros(BuildContext context, double fuel) {
-    return TextWriter(
+  Widget showLitresToEuros(BuildContext context, double fuel) {
+    return cardify(TextWriter(
         fuel.toStringAsFixed(2) +
             "l maksab " +
             this
@@ -38,24 +38,24 @@ class Commons {
                 .toStringAsFixed(2) +
             "€.",
         Colors.black12,
-        this._size);
+        this._size));
   }
 
   Widget showLitresToKilometres(BuildContext context, double fuel) {
     List<double> kilometres = this._calculator.calculateKmWithLitres(fuel);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        TextWriter(fuel.toStringAsFixed(2) + "l eest saab sõita:", Colors.lightGreen,
-            this._size),
+    return cardify(Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+        TextWriter(fuel.toStringAsFixed(2) + "l eest saab sõita:",
+            Colors.lightGreen, this._size),
         TextWriter(kilometres[0].toStringAsFixed(2) + "km maanteel,",
             Color(0xFFC5E6A6), this._size),
-        TextWriter(kilometres[1].toStringAsFixed(2) + "km linnas,", Color(0xFF9899A6),
-            this._size),
+        TextWriter(kilometres[1].toStringAsFixed(2) + "km linnas,",
+            Color(0xFF9899A6), this._size),
         TextWriter("keskmiselt " + kilometres[2].toStringAsFixed(2) + "km.",
             Color(0xFFB9BEA5), this._size)
       ],
-    );
+    ));
   }
 
   Widget showKilometresToLitres(BuildContext context, double kilometres) {
@@ -63,12 +63,12 @@ class Commons {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        TextWriter(kilometres.toString() + "km sõiduks kulub:", Colors.lightGreen,
-            this._size),
-        TextWriter("Maanteel " + litres[0].toStringAsFixed(2) + "l,", Color(0xFFC5E6A6),
-            this._size),
-        TextWriter("Linnas " + litres[1].toStringAsFixed(2) + "l,", Color(0xFF9899A6),
-            this._size),
+        TextWriter(kilometres.toString() + "km sõiduks kulub:",
+            Colors.lightGreen, this._size),
+        TextWriter("Maanteel " + litres[0].toStringAsFixed(2) + "l,",
+            Color(0xFFC5E6A6), this._size),
+        TextWriter("Linnas " + litres[1].toStringAsFixed(2) + "l,",
+            Color(0xFF9899A6), this._size),
         TextWriter("keskmiselt " + litres[2].toStringAsFixed(2) + "l.",
             Color(0xFFB9BEA5), this._size)
       ],
@@ -80,7 +80,7 @@ class Commons {
     List<double> litres = this
         ._calculator
         .calculateMoneyWithKm(this._fuelData.getFuelPrice(), kilometres);
-    return Column(
+    return cardify(Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         if (header)
@@ -93,26 +93,38 @@ class Commons {
         TextWriter("keskmiselt " + litres[2].toStringAsFixed(2) + "€.",
             Color(0xFFB9BEA5), this._size)
       ],
+    ));
+  }
+
+  Widget displayFuelPrice() {
+    return cardify(TextWriter("Kütusehind on hetkel " + this.getFuelData().getFuelPrice().toString() + "€/l", Colors.lightGreen, 50));
+  }
+
+  Widget cardify(Widget widget){
+    return Card(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5.0),
+    ),
+    child:widget,
     );
   }
 
-  TextWriter showMoneyToLitres(double moneyGiven, double amountOfFuel) {
-    return TextWriter(
+  Widget showMoneyToLitres(double moneyGiven, double amountOfFuel) {
+    return cardify(TextWriter(
         moneyGiven.toStringAsFixed(2) +
             "€ eest saab\n" +
             amountOfFuel.toStringAsFixed(2) +
             "l kütust.",
         Colors.black12,
-        this._size * 2);
+        this._size * 2));
   }
 
-  TextWriter showCombinedLitres(double road, double city) {
+  Widget showCombinedLitres(double road, double city) {
     double amountOfFuel = _calculator.calculateRoute(road, city);
-    return TextWriter("Kütusekulu on " + amountOfFuel.toStringAsFixed(2) + "l.",
-        Colors.black26, this._size);
+    return cardify(TextWriter("Kütusekulu on " + amountOfFuel.toStringAsFixed(2) + "l.",
+        Colors.black26, this._size));
   }
 
-  TextWriter blank() {
-    return TextWriter("", null, 5);
-  }
 }

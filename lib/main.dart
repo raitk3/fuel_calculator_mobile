@@ -11,6 +11,14 @@ import 'package:fuelcalculator/screens/calculators/RouteCalculator.dart';
 import 'package:fuelcalculator/screens/calculators/Settings.dart';
 
 void main() {
+
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark));
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+
   runApp(MyApp());
 }
 
@@ -20,20 +28,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
     Commons commons = new Commons();
 
-    return MaterialApp(
-
+    return
+      MaterialApp(
       title: 'Fuel calculator',
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.indigo,
         backgroundColor: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Fuel calculator home'),
+      home: AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent, // transparent status bar
+        systemNavigationBarColor: Colors.transparent, // navigation bar color
+        statusBarIconBrightness: Brightness.dark, // status bar icons' color
+        systemNavigationBarIconBrightness: Brightness.dark, //navigation bar icons' color
+      ),
+        child:MyHomePage(title: 'Fuel calculator home'),
+      ),
       routes: <String, WidgetBuilder> {
         "/EuroToKm": (context) => EuroToKmCalculator(commons),
         "/KmToEuro": (context) => KmToEuroCalculator(commons),

@@ -13,7 +13,7 @@ class KmToEuroCalculator extends StatefulWidget {
 }
 
 class _KmToEuroCalculatorState extends State<KmToEuroCalculator> {
-  Color _theme = Color(0xFFA7AAA4);
+  Color _theme = Colors.deepOrange;
   Commons _commons;
   bool _visibility = false;
   double _kilometresDriven = 0.0;
@@ -30,10 +30,11 @@ class _KmToEuroCalculatorState extends State<KmToEuroCalculator> {
         icon: Icon(Icons.directions_car),
         hintText: 'Sõidetud kilomeetrid',
         labelText: "Mitu km soovid sõita?",
+        border: InputBorder.none,
       ),
       controller: this._controller,
       onFieldSubmitted: (value) {
-        this._visibilityMethod();
+        this.submit();
       },
       validator: (String value) {
         return (num.tryParse(value).toDouble() != null &&
@@ -45,8 +46,8 @@ class _KmToEuroCalculatorState extends State<KmToEuroCalculator> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("km -> l, km -> €", style: TextStyle(color: Colors.black),),
-        iconTheme: IconThemeData(color: Colors.black),
+        centerTitle: true,
+        title: Text("km -> l, km -> €"),
         backgroundColor: this._theme,
       ),
       body: Stack(children: <Widget>[
@@ -54,14 +55,13 @@ class _KmToEuroCalculatorState extends State<KmToEuroCalculator> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              this._commons.getFuelData().display(),
-              this._textField,
+              this._commons.displayFuelPrice(),
+              this._commons.cardify(this._textField),
               if (this._visibility && this._kilometresDriven > 0 &&
                   this._kilometresDriven < 1000000)
                 this
                     ._commons
                     .showKilometresToLitres(context, this._kilometresDriven),
-              this._commons.blank(),
               if (this._visibility && this._kilometresDriven > 0 &&
                   this._kilometresDriven < 1000000)
                 this._commons.showKilometresToEuros(
@@ -75,7 +75,7 @@ class _KmToEuroCalculatorState extends State<KmToEuroCalculator> {
                   alignment: FractionalOffset.bottomRight,
                   child: RaisedButton(
                     onPressed: () {
-                      this._visibilityMethod();
+                      this.submit();
                     },
                     elevation: 2.0,
                     color: this._theme,
@@ -94,7 +94,7 @@ class _KmToEuroCalculatorState extends State<KmToEuroCalculator> {
     );
   }
 
-  void _visibilityMethod() {
+  void submit() {
     setState(() {
       if (!this._visibility) {
         this._visibility = true;

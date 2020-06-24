@@ -31,9 +31,9 @@ dependencies:
   cupertino_icons: ^0.1.3
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.7.3"
   flutter_test:
     sdk: flutter
-  shared_preferences: ^0.5.7+3
 
 
 # For information on the generic Dart part of this file, see the
@@ -77,3 +77,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icona.png"
+  adaptive_icon_background: "assets/icon/abcg.png"
+  adaptive_icon_foreground: "assets/icon/icon.png"
+

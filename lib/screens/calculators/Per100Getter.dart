@@ -14,12 +14,13 @@ class Per100Getter extends StatelessWidget {
     listPer100 = this._commons.getFuelData().getListPer100();
     return Scaffold(
         appBar: AppBar(
-          title: Text("Info 100km kohta", style: TextStyle(color: Colors.black),),
-          iconTheme: IconThemeData(color: Colors.black),
-          backgroundColor: Color(0xFFC5E6A6),
+          centerTitle: true,
+          title: Text("Info 100km kohta",),
+          backgroundColor: Colors.red,
         ),
         body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          TextWriter(
+          this._commons.cardify(Column(
+            children:[TextWriter(
               "Kütusekulu maanteel on \n" +
                   listPer100[0].toStringAsFixed(2) +
                   "l/100km",
@@ -36,10 +37,13 @@ class Per100Getter extends StatelessWidget {
                   listPer100[2].toStringAsFixed(2) +
                   "l/100km",
               Color(0xFFB9BEA5),
-              this._commons.getSize() * 2),
-          this._commons.blank(),
-          this._commons.getFuelData().display(),
-          TextWriter(
+              this._commons.getSize() * 2)],
+          )),
+
+          this._commons.displayFuelPrice(),
+          this._commons.cardify(Column(
+            children:[
+              TextWriter(
               "Maanteesõidu kulu on \n" +
                   this
                       ._commons
@@ -50,7 +54,7 @@ class Per100Getter extends StatelessWidget {
                   "€/100km",
               Color(0xFFC5E6A6),
               this._commons.getSize() * 2),
-          TextWriter(
+            TextWriter(
               "Linnasõidu kulu on \n" +
                   this
                       ._commons
@@ -61,7 +65,7 @@ class Per100Getter extends StatelessWidget {
                   "€/100km",
               Color(0xFF9899A6),
               this._commons.getSize() * 2),
-          TextWriter(
+            TextWriter(
               "Keskmine kulu on \n" +
                   this
                       ._commons
@@ -72,6 +76,7 @@ class Per100Getter extends StatelessWidget {
                   "€/100km",
               Color(0xFFB9BEA5),
               this._commons.getSize() * 2),
+          ],))
         ]));
   }
 }

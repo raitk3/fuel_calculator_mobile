@@ -13,7 +13,7 @@ class LitreToKmCalculator extends StatefulWidget {
 }
 
 class _LitreToKmCalculatorState extends State<LitreToKmCalculator> {
-  Color _theme = Color(0xFFB9BEA5);
+  Color _theme = Colors.green;
   Commons _commons;
   bool _visibility = false;
   double _amountOfFuel;
@@ -30,10 +30,11 @@ class _LitreToKmCalculatorState extends State<LitreToKmCalculator> {
         icon: Icon(Icons.local_gas_station),
         hintText: 'Tangitud liitrid',
         labelText: "Mitu liitrit läheb?",
+        border: InputBorder.none,
       ),
       controller: this._controller,
       onFieldSubmitted: (value) {
-        this._visibilityMethod();
+        this.submit();
       },
       validator: (String value) {
         return (num.tryParse(value).toDouble() != null &&
@@ -46,8 +47,8 @@ class _LitreToKmCalculatorState extends State<LitreToKmCalculator> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("l -> km, l -> €", style: TextStyle(color: Colors.black),),
-        iconTheme: IconThemeData(color: Colors.black),
+        centerTitle: true,
+        title: Text("l -> km, l -> €"),
         backgroundColor: this._theme,
       ),
       body: Stack(children: <Widget>[
@@ -55,15 +56,13 @@ class _LitreToKmCalculatorState extends State<LitreToKmCalculator> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              this._commons.getFuelData().display(),
-              this._textField,
-              this._commons.blank(),
+              this._commons.displayFuelPrice(),
+              this._commons.cardify(this._textField),
               if (this._visibility &&
                   this._amountOfFuel != null &&
                   this._amountOfFuel > 0 &&
                   this._amountOfFuel < 1000000)
                 this._commons.showLitresToEuros(context, this._amountOfFuel),
-              this._commons.blank(),
               if (this._visibility &&
                   this._amountOfFuel != null &&
                   this._amountOfFuel > 0 &&
@@ -80,7 +79,7 @@ class _LitreToKmCalculatorState extends State<LitreToKmCalculator> {
                   alignment: FractionalOffset.bottomRight,
                   child: RaisedButton(
                     onPressed: () {
-                      this._visibilityMethod();
+                      this.submit();
                     },
                     elevation: 2.0,
                     color: this._theme,
@@ -99,7 +98,7 @@ class _LitreToKmCalculatorState extends State<LitreToKmCalculator> {
     );
   }
 
-  void _visibilityMethod() {
+  void submit() {
     setState(() {
       if (!this._visibility) {
         this._visibility = true;

@@ -12,7 +12,7 @@ class RouteCalculator extends StatefulWidget {
 }
 
 class _RouteCalculatorState extends State<RouteCalculator> {
-  Color _theme = Color(0xFF9899A6);
+  Color _theme = Colors.deepPurple;
   Commons _commons;
   TextEditingController _textFieldRoadController;
   TextEditingController _textFieldCityController;
@@ -36,10 +36,11 @@ class _RouteCalculatorState extends State<RouteCalculator> {
         icon: Icon(Icons.nature),
         hintText: 'Maantee',
         labelText: "Mitu km tuleb maanteel?",
+        border: InputBorder.none,
       ),
       controller: this._textFieldRoadController,
       onFieldSubmitted: (value) {
-        this._visibilityMethod();
+        this.submit();
       },
       validator: (String value) {
         return (num.tryParse(value).toDouble() != null &&
@@ -54,10 +55,11 @@ class _RouteCalculatorState extends State<RouteCalculator> {
         icon: Icon(Icons.location_city),
         hintText: 'Linn',
         labelText: "Mitu km tuleb linnas?",
+        border: InputBorder.none,
       ),
       controller: this._textFieldCityController,
       onFieldSubmitted: (value) {
-        this._visibilityMethod();
+        this.submit();
       },
       validator: (String value) {
         return (num.tryParse(value).toDouble() != null &&
@@ -69,8 +71,8 @@ class _RouteCalculatorState extends State<RouteCalculator> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Teekond", style: TextStyle(color: Colors.black),),
-        iconTheme: IconThemeData(color: Colors.black),
+        centerTitle: true,
+        title: Text("Teekond"),
         backgroundColor: this._theme,
       ),
       body: Stack(children: <Widget>[
@@ -78,9 +80,12 @@ class _RouteCalculatorState extends State<RouteCalculator> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              this._commons.getFuelData().display(),
-              this._textFieldRoad,
-              this._textFieldCity,
+              this._commons.displayFuelPrice(),
+              this._commons.cardify(Column(
+                  children:[
+                    this._textFieldRoad,
+                    this._textFieldCity])
+              ),
               if (this._total != null &&
                   !(this._city < 0 || this._road < 0) &&
                   this._total > 0 &&
@@ -100,7 +105,7 @@ class _RouteCalculatorState extends State<RouteCalculator> {
                   alignment: FractionalOffset.bottomRight,
                   child: RaisedButton(
                     onPressed: () {
-                      this._visibilityMethod();
+                      this.submit();
                     },
                     elevation: 2.0,
                     color: this._theme,
@@ -119,7 +124,7 @@ class _RouteCalculatorState extends State<RouteCalculator> {
     );
   }
 
-  void _visibilityMethod() {
+  void submit() {
     setState(() {
       if (!this._visibility) {
         this._visibility = true;
@@ -128,8 +133,7 @@ class _RouteCalculatorState extends State<RouteCalculator> {
     this._road = num.parse(this._textFieldRoadController.text).toDouble();
     this._city = num.parse(this._textFieldCityController.text).toDouble();
     this._total = this._road + this._city;
-    this._litres =
-        this._commons.getCalculator().calculateRoute(this._road, this._city);
+    this._litres = this._commons.getCalculator().calculateRoute(this._road, this._city);
     this._textFieldRoadController.text = "";
     this._textFieldCityController.text = "";
   }

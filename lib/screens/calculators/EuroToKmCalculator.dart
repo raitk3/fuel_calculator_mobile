@@ -14,7 +14,7 @@ class EuroToKmCalculator extends StatefulWidget {
 }
 
 class _EuroToKmCalculatorState extends State<EuroToKmCalculator> {
-  Color _theme = Color(0xFFBDD2A6);
+  Color _theme = Colors.blue;
   TextFormField _textField;
   TextEditingController _controller;
   Commons _commons;
@@ -31,14 +31,16 @@ class _EuroToKmCalculatorState extends State<EuroToKmCalculator> {
     this._controller = TextEditingController();
     this._textField = TextFormField(
       keyboardType: TextInputType.number,
+
       decoration: InputDecoration(
         icon: Icon(Icons.euro_symbol),
         hintText: 'Makstud raha',
         labelText: "Mitme euro eest soovid kütust osta?",
+        border: InputBorder.none,
       ),
       controller: this._controller,
       onFieldSubmitted: (value) {
-        this._visibilityMethod();
+        this._submit();
       },
       validator: (String value) {
         return (num.tryParse(value).toDouble() != null &&
@@ -50,8 +52,8 @@ class _EuroToKmCalculatorState extends State<EuroToKmCalculator> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("€ -> l, € -> km", style: TextStyle(color: Colors.black),),
-        iconTheme: IconThemeData(color: Colors.black),
+        centerTitle: true,
+        title: Text("€ -> l, € -> km"),
         backgroundColor: this._theme,
       ),
       body: Stack(children: <Widget>[
@@ -59,16 +61,14 @@ class _EuroToKmCalculatorState extends State<EuroToKmCalculator> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              this._commons.getFuelData().display(),
-              this._textField,
-              this._commons.blank(),
+              this._commons.displayFuelPrice(),
+              this._commons.cardify(this._textField),
               if (this._visibility &&
                   this._amountOfFuel > 0 &&
                   this._amountOfFuel < 1000000)
                 this
                     ._commons
                     .showMoneyToLitres(this._moneyGiven, this._amountOfFuel),
-              this._commons.blank(),
               if (this._visibility &&
                   this._amountOfFuel != null &&
                   this._amountOfFuel > 0 &&
@@ -85,7 +85,7 @@ class _EuroToKmCalculatorState extends State<EuroToKmCalculator> {
                   alignment: FractionalOffset.bottomRight,
                   child: RaisedButton(
                     onPressed: () {
-                      this._visibilityMethod();
+                      this._submit();
                     },
                     elevation: 2.0,
                     color: this._theme,
@@ -104,7 +104,7 @@ class _EuroToKmCalculatorState extends State<EuroToKmCalculator> {
     );
   }
 
-  void _visibilityMethod() {
+  void _submit() {
     setState(() {
       if (!this._visibility) {
         this._visibility = true;
