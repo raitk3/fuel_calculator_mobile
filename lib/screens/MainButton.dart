@@ -14,31 +14,35 @@ class MainButton extends StatelessWidget{
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(this.size / 4),
           color: Colors.white,
       ),
       height: this.size,
-      child: FlatButton(
+      margin: EdgeInsets.all(5),
+      child: TextButton(
         onPressed: () { Navigator.pushNamed(context, this._routename); },
         child: Row(
           children: [
+            Padding(
+              padding: EdgeInsets.all(this.size / 8),
+            ),
             CircleAvatar(
               backgroundColor: this._color,
-              radius: 25,
+              radius: this.size / 5,
               child:
                 Icon(
                 this._icon,
                 color: Colors.white,
-                size: 35.0,
+                size: this.size / 4,
               ),
             ),
-
             Padding(
-              padding: EdgeInsets.all(
-                10.0
-              ),
+              padding: EdgeInsets.all(this.size / 8),
             ),
 
-            Text(this.text, textScaleFactor: 2,)
+            Text(this.text,
+                textScaleFactor: 2,
+                style: TextStyle(color: Colors.black))
           ],
         ),
       ),

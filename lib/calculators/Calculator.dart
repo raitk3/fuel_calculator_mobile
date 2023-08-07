@@ -1,18 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:fuelcalculator/screens/calculators/Commons.dart';
+import 'package:fuel_calculator/common/Commons.dart';
 
 class Calculator {
   Commons _commons;
   Calculator(this._commons);
 
   List calculateKmWithLitres(double amountOfFuel){
-    List<double> returnable = List();
-    this._commons.getFuelData().getListPer100().forEach((element) {returnable.add(amountOfFuel / element * 100);});
+    List<double> returnable = [];
+    this._commons.getFuelData().getListPer100()
+        .forEach((element) {returnable.add(amountOfFuel / element * 100);});
     return returnable;
   }
 
   List get100kmPrice(fuelPrice) {
-    return this._commons.getFuelData().getListPer100().map((e) => e * fuelPrice).toList();
+    return this._commons.getFuelData()
+        .getListPer100().map((e) => e * fuelPrice).toList();
   }
 
   double calculateFuelWithMoney(double moneyGiven, double fuelPrice) {
@@ -24,20 +25,23 @@ class Calculator {
   }
 
   List calculate1kmFuel() {
-    return this._commons.getFuelData().getListPer100().map((e) => e / 100).toList();
+    return this._commons.getFuelData()
+        .getListPer100().map((e) => e / 100).toList();
   }
 
   List calculateLitresWithKm(double kilometres){
-    List<double> returnable = List();
+    List<double> returnable = [];
     List<double> kmFuels = this.calculate1kmFuel();
     kmFuels.forEach((element) {returnable.add(element * kilometres);});
     return returnable;
   }
 
   List calculateMoneyWithKm(fuelPrice, kilometres){
-    List<double> returnable = List();
+    List<double> returnable = [];
     List<double> amountOfFuel = calculate1kmFuel();
-    amountOfFuel.forEach((element) {returnable.add(element * kilometres * fuelPrice);});
+    amountOfFuel.forEach((element) {
+      returnable.add(element * kilometres * fuelPrice);
+    });
     return returnable;
   }
 

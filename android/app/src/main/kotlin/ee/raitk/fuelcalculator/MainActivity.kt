@@ -1,4 +1,4 @@
-package ee.raitk.fuelcalculator
+package ee.raitk.fuel_calculator
 
 import io.flutter.embedding.android.FlutterActivity
 

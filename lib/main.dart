@@ -1,14 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fuelcalculator/screens/MainScreen.dart';
-import 'package:fuelcalculator/screens/calculators/Commons.dart';
-import 'package:fuelcalculator/screens/calculators/EuroToKmCalculator.dart';
-import 'package:fuelcalculator/screens/calculators/KmToEuroCalculator.dart';
-import 'package:fuelcalculator/screens/calculators/LitreToKmCalculator.dart';
-import 'package:fuelcalculator/screens/calculators/Per100Getter.dart';
-import 'package:fuelcalculator/screens/calculators/RouteCalculator.dart';
-import 'package:fuelcalculator/screens/calculators/Settings.dart';
+import 'package:fuel_calculator/screens/MainScreen.dart';
+import 'package:fuel_calculator/common/Commons.dart';
+// TODO: Single import?
+import 'package:fuel_calculator/screens/pages/EuroToKmCalculator.dart';
+import 'package:fuel_calculator/screens/pages/KmToEuroCalculator.dart';
+import 'package:fuel_calculator/screens/pages/LitreToKmCalculator.dart';
+import 'package:fuel_calculator/screens/pages/Per100Getter.dart';
+import 'package:fuel_calculator/screens/pages/CombinedCalculator.dart';
+import 'package:fuel_calculator/screens/pages/Settings.dart';
+import 'package:fuel_calculator/screens/pages/About.dart';
 
 void main() {
 
@@ -19,13 +20,11 @@ void main() {
     DeviceOrientation.portraitUp,
   ]);
 
-  runApp(MyApp());
+  runApp(FuelCalculatorApp());
 }
 
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-
+class FuelCalculatorApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Commons commons = new Commons();
@@ -33,11 +32,7 @@ class MyApp extends StatelessWidget {
     return
       MaterialApp(
       title: 'Fuel calculator',
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-        backgroundColor: Colors.black,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      theme: commons.getThemeData(),
       home: AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarColor: Colors.transparent, // transparent status bar
@@ -45,41 +40,33 @@ class MyApp extends StatelessWidget {
         statusBarIconBrightness: Brightness.dark, // status bar icons' color
         systemNavigationBarIconBrightness: Brightness.dark, //navigation bar icons' color
       ),
-        child:MyHomePage(title: 'Fuel calculator home'),
+        child:HomePage(title: 'Fuel calculator home'),
       ),
       routes: <String, WidgetBuilder> {
         "/EuroToKm": (context) => EuroToKmCalculator(commons),
         "/KmToEuro": (context) => KmToEuroCalculator(commons),
         "/LitreToKm": (context) => LitreToKmCalculator(commons),
         "/FuelPer100": (context) => Per100Getter(commons),
-        "/Route": (context) => RouteCalculator(commons),
+        "/Combined": (context) => CombinedCalculator(commons),
         "/Settings": (context) => Settings(commons),
+        "/About": (context) => About(commons),
       },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+class HomePage extends StatefulWidget {
+  HomePage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  @override
+class _HomePageState extends State<HomePage> {
   MainScreen _mainScreen = MainScreen();
+  @override
   Widget build(BuildContext context) {
     return _mainScreen.build(context);
   }

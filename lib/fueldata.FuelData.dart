@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:fuelcalculator/screens/TextWriter.dart';
-import 'package:fuelcalculator/screens/calculators/Commons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FuelData {
@@ -21,7 +18,7 @@ class FuelData {
     return [_road, _city, _average];
   }
 
-  Future<bool> _getData() async {
+  Future<void> _getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (!prefs.containsKey('price')) {
       prefs.setDouble('price', 1.179);
@@ -42,8 +39,6 @@ class FuelData {
       prefs.setDouble('avg', 8.2);
     }
     this._average = prefs.getDouble('avg');
-
-    await SharedPreferences.getInstance();
   }
 
   Future<void> setFuelPrice(double value) async {

@@ -1,28 +1,57 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'MainButton.dart';
 
 class MainScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    int fullHeight = MediaQuery.of(context).size.height.floor() - 91;
-
+    const int AMOUNT_OF_ENTRIES = 7;
+    int fullHeight = MediaQuery.of(context).size.height.floor() - 92
+    - AMOUNT_OF_ENTRIES * 10;
+    double elementHeight = fullHeight / AMOUNT_OF_ENTRIES;
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-            title: Text("Kütusekalkulaator"),
+            title: Text("Fuel calculator"),
         ),
-        body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+        body: ListView(
             children: [
-              MainButton(Colors.red, "100km", fullHeight/6, '/FuelPer100', Icons.flag),
-              MainButton(Colors.blue, "€ -> l\n€ -> km", fullHeight/6, '/EuroToKm', Icons.euro_symbol),
-              MainButton(Colors.green, "l -> km\nl -> €", fullHeight/6, '/LitreToKm', Icons.local_gas_station),
-              MainButton(Colors.deepOrange, "km -> l\nkm -> €", fullHeight/6, '/KmToEuro', Icons.directions_car),
-              MainButton(Colors.deepPurple, "Teekond", fullHeight/6, '/Route', Icons.directions),
-              MainButton(Colors.black54, "Sätted", fullHeight/6, '/Settings', Icons.settings)
+              MainButton(Colors.red,
+                         "100km",
+                         elementHeight,
+                         '/FuelPer100',
+                         Icons.flag),
+              MainButton(Colors.blue,
+                         "From money",
+                         elementHeight,
+                         '/EuroToKm',
+                         Icons.euro_symbol),
+              MainButton(Colors.green,
+                         "From fuel",
+                         elementHeight,
+                         '/LitreToKm',
+                         Icons.local_gas_station),
+              MainButton(Colors.deepOrange,
+                         "From distance",
+                         elementHeight,
+                         '/KmToEuro',
+                         Icons.directions_car),
+              MainButton(Colors.deepPurple,
+                         "Combined",
+                         elementHeight,
+                         '/Combined',
+                         Icons.directions),
+              MainButton(Colors.blueGrey,
+                         "Settings",
+                         elementHeight,
+                         '/Settings',
+                         Icons.settings),
+              MainButton(Colors.black,
+                         "About",
+                         elementHeight,
+                         '/About',
+                         Icons.info)
             ]
         )
     );
