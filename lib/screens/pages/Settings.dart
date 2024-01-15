@@ -5,7 +5,7 @@ import 'package:fuel_calculator/screens/pages/Per100Getter.dart';
 import '../../common/TextWriter.dart';
 
 class Settings extends StatefulWidget {
-  Commons _commons;
+  final Commons _commons;
 
   Settings(this._commons);
 
@@ -151,9 +151,7 @@ class _SettingsState extends State<Settings> {
         title: Text("Settings"),
         // backgroundColor: this._theme,
       ),
-      body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: ListView(
           children: [this._commons.cardify(Column(
             children:[
               textField,

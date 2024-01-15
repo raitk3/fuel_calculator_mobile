@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fuel_calculator/calculators/Calculator.dart';
 import 'package:fuel_calculator/fueldata.FuelData.dart';
 
+import 'package:fuel_calculator/common/MiniButton.dart';
 import 'package:fuel_calculator/common/TextWriter.dart';
 
 class Commons {
@@ -150,4 +151,54 @@ class Commons {
         _themeData.cardColor));
   }
 
+  Drawer getHamburgerMenu(int active) {
+    double elementHeight = 70;
+    return Drawer(
+      child: ListView(
+          children: [
+            MiniButton(Colors.red,
+                "100km",
+                elementHeight,
+                '/FuelPer100',
+                Icons.flag,
+                active == 1),
+            MiniButton(Colors.blue,
+                "From money",
+                elementHeight,
+                '/EuroToKm',
+                Icons.euro_symbol,
+                active == 2),
+            MiniButton(Colors.green,
+                "From fuel",
+                elementHeight,
+                '/LitreToKm',
+                Icons.local_gas_station,
+                active == 3),
+            MiniButton(Colors.deepOrange,
+                "From distance",
+                elementHeight,
+                '/KmToEuro',
+                Icons.directions_car,
+                active == 4),
+            MiniButton(Colors.deepPurple,
+                "Combined",
+                elementHeight,
+                '/Combined',
+                Icons.directions,
+                active == 5),
+            MiniButton(Colors.blueGrey,
+                "Settings",
+                elementHeight,
+                '/Settings',
+                Icons.settings,
+                active == 6),
+            MiniButton(Colors.black,
+                "About",
+                elementHeight,
+                '/About',
+                Icons.info,
+                active == 7)
+          ]),
+    );
+  }
 }

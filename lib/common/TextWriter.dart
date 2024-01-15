@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
 class TextWriter extends StatelessWidget {
-  Color _color;
-  String _text;
+  final Color _color;
+  final String _text;
 
   TextWriter(this._text, this._color);
 

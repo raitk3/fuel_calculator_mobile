@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fuel_calculator/common/Commons.dart';
 import 'package:fuel_calculator/screens/pages/LitreToKmCalculator.dart';
@@ -31,16 +30,15 @@ class _EuroToKmCalculatorState extends State<EuroToKmCalculator> {
     this._controller = TextEditingController();
     this._textField = TextFormField(
       keyboardType: TextInputType.number,
-
       decoration: InputDecoration(
         icon: Icon(Icons.euro_symbol),
         hintText: 'Amount of money',
         labelText: "How many euros worth of fuel did you buy?",
         border: InputBorder.none,
       ),
-      controller: this._controller,
+      controller: _controller,
       onFieldSubmitted: (value) {
-        this._submit();
+        _submit();
       },
       validator: (String value) {
         return (num.tryParse(value).toDouble() != null &&
@@ -55,43 +53,35 @@ class _EuroToKmCalculatorState extends State<EuroToKmCalculator> {
         centerTitle: true,
         title: Text("From money"),
       ),
-      body: Stack(children: <Widget>[
-        Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+      drawer: _commons.getHamburgerMenu(2),
+      body: ListView(
             children: <Widget>[
-              this._commons.displayFuelPrice(color: _theme),
-              this._commons.cardify(this._textField),
-              if (this._visibility &&
-                  this._amountOfFuel > 0 &&
-                  this._amountOfFuel < 1000000)
-                this._commons
-                    .showMoneyToLitres(this._moneyGiven, this._amountOfFuel),
-              if (this._visibility &&
-                  this._amountOfFuel != null &&
-                  this._amountOfFuel > 0 &&
-              this._amountOfFuel < 1000000)
-                this._commons
-                    .showLitresToKilometres(context, this._amountOfFuel),
+              _commons.displayFuelPrice(color: _theme),
+              _commons.cardify(this._textField),
+              if (_visibility &&
+                  _amountOfFuel > 0 &&
+                  _amountOfFuel < 1000000)
+                _commons.showMoneyToLitres(_moneyGiven, _amountOfFuel),
+              if (_visibility &&
+                  _amountOfFuel != null &&
+                  _amountOfFuel > 0 &&
+                  _amountOfFuel < 1000000)
+                _commons.showLitresToKilometres(context, _amountOfFuel),
             ]),
-      ]),
     );
   }
 
   void _submit() {
     setState(() {
-      if (!this._visibility) {
-        this._visibility = true;
+      if (!_visibility) {
+        _visibility = true;
       }
     });
-    this._moneyGiven = num.parse(this._controller.text).toDouble();
-    this._amountOfFuel = num.parse(this
-            ._commons
-            .getCalculator()
-            .calculateFuelWithMoney(
-                this._moneyGiven, this._commons.getFuelData().getFuelPrice())
-            .toStringAsFixed(2))
-        .toDouble();
-    this._controller.text = "";
+    _moneyGiven = num.parse(_controller.text).toDouble();
+    _amountOfFuel = num.parse(_commons.getCalculator()
+      .calculateFuelWithMoney(_moneyGiven, _commons.getFuelData()
+                                                   .getFuelPrice())
+      .toStringAsFixed(2))
+      .toDouble();
   }
 }

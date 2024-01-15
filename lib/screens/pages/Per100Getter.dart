@@ -3,22 +3,22 @@ import 'package:fuel_calculator/common/TextWriter.dart';
 import 'package:fuel_calculator/common/Commons.dart';
 
 class Per100Getter extends StatelessWidget {
-  Commons _commons;
-  Color _theme = Colors.redAccent;
-  List<double> listPer100;
+  final Commons _commons;
+  final Color _theme = Colors.redAccent;
 
   Per100Getter(this._commons);
 
   @override
   Widget build(BuildContext context) {
-    listPer100 = this._commons.getFuelData().getListPer100();
+    List<double> listPer100 = this._commons.getFuelData().getListPer100();
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           title: Text("Info about 100km"),
           // backgroundColor: _theme,
         ),
-        body: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
+        drawer: _commons.getHamburgerMenu(1),
+        body: ListView(
             children: [
               this._commons.displayFuelPrice(color: _theme),
               this._commons.cardify(Column(

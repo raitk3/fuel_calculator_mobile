@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fuel_calculator/common/MiniButton.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:fuel_calculator/common/Commons.dart';
 
@@ -21,7 +21,7 @@ class _AboutState extends State<About> {
 
   @override
   Widget build(BuildContext context) {
-    String version = "0.2.0";
+    String version = "0.2.1";
     Future<PackageInfo> packageInfo = PackageInfo.fromPlatform();
 
     return Scaffold(
@@ -29,7 +29,8 @@ class _AboutState extends State<About> {
           centerTitle: true,
           title: Text("About"),
         ),
-        body: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
+        drawer: _commons.getHamburgerMenu(7),
+        body: ListView(
             children: [
               _commons.cardify(Column(
                 children:[TextWriter(

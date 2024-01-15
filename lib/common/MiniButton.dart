@@ -1,27 +1,35 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fuel_calculator/common/TextWriter.dart';
 
-class MainButton extends StatelessWidget{
+class MiniButton extends StatelessWidget{
   final Color _color;
   final String _text;
   final double _size;
   final String _routename;
   final IconData _icon;
+  final bool _active;
 
-  MainButton(this._color, this._text, this._size, this._routename, this._icon);
+  MiniButton(this._color, this._text, this._size, this._routename, this._icon, this._active);
 
   Widget build(BuildContext context) {
+    Color color = Colors.white;
+    Color textColor = Colors.black;
+    if (this._active){
+      color = Colors.indigoAccent;
+      textColor = Colors.white;
+    }
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(_size / 4),
-          color: Colors.white,
+        borderRadius: BorderRadius.circular(_size),
+        color: color,
       ),
       height: _size,
       margin: EdgeInsets.all(5),
       child: TextButton(
-        onPressed: () { Navigator.pushNamed(context, this._routename); },
+        onPressed: () { Navigator.popAndPushNamed(context, this._routename); },
         child: Row(
           children: [
             Padding(
@@ -31,7 +39,7 @@ class MainButton extends StatelessWidget{
               backgroundColor: this._color,
               radius: _size / 5,
               child:
-                Icon(
+              Icon(
                 this._icon,
                 color: Colors.white,
                 size: _size / 4,
@@ -41,8 +49,8 @@ class MainButton extends StatelessWidget{
               padding: EdgeInsets.all(_size / 8),
             ),
             Text(_text,
-                textScaleFactor: _size / 40,
-                style: TextStyle(color: Colors.black))
+                textScaleFactor: _size / 80,
+                style: TextStyle(color: textColor))
           ],
         ),
       ),
